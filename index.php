@@ -28,9 +28,9 @@ and open the template in the editor.
             <div class="col-md-6">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">nome</label>
+                        <label for="text" class="col-sm-2 control-label">nome</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="nome">
+                            <input type="text" class="form-control" id="inputEmail3" placeholder="nome">
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,19 +57,19 @@ and open the template in the editor.
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox"> Remember me
+                                        <input type="checkbox" checked> ativo
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Sign in</button>
+                                <button type="submit" class="btn btn-success">entra</button>
                             </div>
                         </div>
                 </form>
             </div>
-            <div class="col-md-6">.col-md-6</div>
+            <div class="col-md-6">Listagem de pessoas</div>
         </div>
 
     </div>
