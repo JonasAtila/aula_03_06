@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php
+//echo '<pre>';
+//var_dump($_get);
+//echo '</pre>';
+phpinfo();
+exit;
+?>
 <html>
     <head>
         <title>todo louco e puco</title>
@@ -34,13 +35,13 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">senha</label>
+                        <label for="endereço" class="col-sm-2 control-label">endereço</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="endereço">
+                            <input type="endereço" class="form-control" id="inputPassword3" placeholder="endereço">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">sexo</label>
+                        <label for="sexo" class="col-sm-2 control-label">sexo</label>
                         <div class="col-sm-10">
                             <div class="checkbox">
                                 <label>
