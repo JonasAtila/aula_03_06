@@ -1,56 +1,47 @@
 <?php
 //echo '<pre>';
-//var_dump($_get);
+//var_dump($_GET);
 //echo '</pre>';
 phpinfo();
 exit;
 ?>
+
+<!DOCTYPE html>
 <html>
     <head>
-        <title>todo louco e puco</title>
+        <title>Cadastro de pessoas</title>
         <meta charset="ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="js/bootstrap.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/jquery-1.11.3.js" type="text/javascript"></script>
-        <script src="js/npm.js" type="text/javascript"></script>
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
-    <a href="css/bootstrap-theme.css.map"></a>
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
-
-</head>
-<body>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="text" class="col-sm-2 control-label">nome</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputEmail3" placeholder="nome">
+        <script src="js/jquery-1.11.3.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-horizontal" method="GET" action="index.php">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nome</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="nome" id="input-nome" class="form-control" placeholder="Nome">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="endereço" class="col-sm-2 control-label">endereço</label>
-                        <div class="col-sm-10">
-                            <input type="endereço" class="form-control" id="inputPassword3" placeholder="endereço">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Endereço</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="endereco" id="input-endereco" class="form-control" placeholder="Endereço">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sexo" class="col-sm-2 control-label">sexo</label>
-                        <div class="col-sm-10">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                                    masculino
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Sexo</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input name="sexo" type="radio" value="m" id="opt-masc"> Masculino
                                 </label>
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option2" checked>
-                                    feminino
+                                <label class="radio-inline">
+                                    <input name="sexo" type="radio" value="f" id="opt-fem"> Feminino
                                 </label>
                             </div>
                         </div>
@@ -58,22 +49,41 @@ exit;
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" checked> ativo
+                                        <input type="checkbox" name="ativo" checked> Ativo
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">entra</button>
+                                <button class="btn btn-success" id="btn-enviar" type="submit" >Inserir</button>
                             </div>
                         </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h5>Listagem de pessoas</h5>
+                </div>
             </div>
-            <div class="col-md-6">Listagem de pessoas</div>
         </div>
-
-    </div>
-
-</body>
+        <script>
+            $('#btn-enviar').click(function () {
+                var valido =true;
+                if ($('#input-nome').val() == '') {
+                    valido = false;
+                    alert('Preencha o nome');
+                }
+                if ($('#input-endereco').val() == '') {
+                    valido = false;
+                    alert('Preencha o endereço');
+                }
+                if (!$('#opt-masc').is(':checked') && !$('#opt-fem').is(':checked')) {
+                    valido = false;
+                    alert('Escolha um sexo');
+                }
+                
+                return valido;
+            })
+        </script>
+    </body>
 </html>
