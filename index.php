@@ -2,8 +2,34 @@
 //echo '<pre>';
 //var_dump($_GET);
 //echo '</pre>';
-phpinfo();
-exit;
+
+
+$con = new mysqli('127.0.0.1', 'root', '', 'lp22015');
+
+$sql = $con->prepare('INSERT INTO pessoa('
+.'nome,'
+.'endereco,'
+.'sexo,'
+.'ativo )'
+. ' VALUES (?, ?, ?, ? )');
+
+if(isset($_GET['ativo'])){
+    $ativo = 1;
+}else{
+    $ativo = 0;
+}
+
+$sql->bind_param('sssi',$_GET['nome'],$_GET['endereco'],$_GET['sexo'],$_GET['ativo']);
+
+
+if($sql->execute()){
+    echo '<h2>sucesso</h2>';
+    
+}else{
+    echo '<pre>';
+    var_dump($sql->error_list);
+    echo '</pre>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,22 +94,22 @@ exit;
         </div>
         <script>
             $('#btn-enviar').click(function () {
-                var valido =true;
-                if ($('#input-nome').val() == '') {
-                    valido = false;
-                    alert('Preencha o nome');
-                }
-                if ($('#input-endereco').val() == '') {
-                    valido = false;
-                    alert('Preencha o endereço');
-                }
-                if (!$('#opt-masc').is(':checked') && !$('#opt-fem').is(':checked')) {
-                    valido = false;
-                    alert('Escolha um sexo');
-                }
-                
-                return valido;
-            })
-        </script>
-    </body>
+var valido = true;
+if ($('#input-nome').val() == '') {
+    valido = false;
+    alert('Preencha o nome');
+}
+if ($('#input-endereco').val() == '') {
+    valido = false;
+    alert('Preencha o endereço');
+}
+if (!$('#opt-masc').is(':checked') &&!$('#opt-fem').is(':checked')) {
+    valido = false;
+    alert('Escolha um sexo');
+}
+
+return valido;
+})
+</script>
+</body>
 </html>
