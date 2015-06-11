@@ -1,5 +1,4 @@
 <?php
-
 require_once('comum.php');
 
 $con = novaConexao();
@@ -7,7 +6,6 @@ $con = novaConexao();
 $sql = $con->prepare('SELECT id, nome, endereco, sexo, ativo FROM pessoas');
 $sql->execute();
 $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
-
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +18,35 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
         <link href="css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
         <script src="js/jquery-1.11.3.js" type="text/javascript"></script>
         <script src="js/bootstrap.js" type="text/javascript"></script>        
+        <style>
+            .larg100{
+                max-width: 100%;
+            }
+            .campo_busca{
+                margin-top:100px
+            }
+        </style>
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
+                    <img class="larg100" src="img/logo.jpg">
+                </div>
+                <div class="col-md-5">
+                    <form class="form-inline campo_busca">
+                        <div class="form-group">
+                            <label class="control-label">Buscar</label>
+                            <input type="text" class="form-control" placeholder="Digite uma busca">
+                        </div>
+                       
+                        <button type="submit" class="btn btn-default">Buscar</button>
+                    </form>
+                </div>
+                <div class="col-md-4">tetwetwete</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" >
                     <form class="form-horizontal" method="GET" action="incluir.php">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nome</label>
@@ -61,27 +83,29 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button class="btn btn-success" id="btn-enviar" type="submit" >Inserir</button>
-                                <?php if(isset($_GET['msg'])){ ?>
-                                <span><?php echo $_GET['msg']; ?></span>
+<?php if (isset($_GET['msg'])) { ?>
+                                    <span><?php echo $_GET['msg']; ?></span>
                                 <?php } ?>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" >
                     <h5>Listagem de pessoas</h5>
                     <ul>
-                        <?php while ($sql->fetch()) {
-                            if($sexo == 'm'){
-                                $sexo = 'Masculino';
-                            }else if($sexo == 'f'){
-                                $sexo = 'Feminino';
-                            }
-                            if($ativo){
-                                $ativo = 'Sim';
-                            }else{
-                                $ativo = 'Não';
-                            } ?>
+<?php
+while ($sql->fetch()) {
+    if ($sexo == 'm') {
+        $sexo = 'Masculino';
+    } else if ($sexo == 'f') {
+        $sexo = 'Feminino';
+    }
+    if ($ativo) {
+        $ativo = 'Sim';
+    } else {
+        $ativo = 'Não';
+    }
+    ?>
                             <li>
                                 <?php echo $nome; ?> <a onclick="confirmaDeletar()" class='btn btn-danger btn-xs'>Deletar</a>
                                 <ul>
@@ -97,9 +121,9 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
             </div>
         </div>
         <script>
-            $('#btn-enviar').click(function () {
+                $('#btn-enviar').click(fun ction () {
                 var valido = true;
-                if ($('#input-nome').val() == '') {
+            if ($('#input-nome').val() == '') {
                     valido = false;
                     alert('Preencha o nome');
                 }
