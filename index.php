@@ -39,7 +39,7 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
                             <label class="control-label">Buscar</label>
                             <input type="text" class="form-control" placeholder="Digite uma busca">
                         </div>
-                       
+
                         <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
                 </div>
@@ -75,7 +75,7 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="ativo" checked> Ativo
+                                        <input type="checkbox" name="ativo" id='input-ativo' checked> Ativo
                                     </label>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button class="btn btn-success" id="btn-enviar" type="submit" >Inserir</button>
-<?php if (isset($_GET['msg'])) { ?>
+                                <?php if (isset($_GET['msg'])) { ?>
                                     <span><?php echo $_GET['msg']; ?></span>
                                 <?php } ?>
                             </div>
@@ -93,21 +93,23 @@ $sql->bind_result($id, $nome, $endereco, $sexo, $ativo);
                 <div class="col-md-6" >
                     <h5>Listagem de pessoas</h5>
                     <ul>
-<?php
-while ($sql->fetch()) {
-    if ($sexo == 'm') {
-        $sexo = 'Masculino';
-    } else if ($sexo == 'f') {
-        $sexo = 'Feminino';
-    }
-    if ($ativo) {
-        $ativo = 'Sim';
-    } else {
-        $ativo = 'Não';
-    }
-    ?>
+                        <?php
+                        while ($sql->fetch()) {
+                            if ($sexo == 'm') {
+                                $sexo = 'Masculino';
+                            } else if ($sexo == 'f') {
+                                $sexo = 'Feminino';
+                            }
+                            if ($ativo) {
+                                $ativo = 'Sim';
+                            } else {
+                                $ativo = 'Não';
+                            }
+                            ?>
                             <li>
-                                <?php echo $nome; ?> <a onclick="confirmaDeletar()" class='btn btn-danger btn-xs'>Deletar</a>
+                                <?php echo $nome; ?> 
+                                <a onclick="confirmaDeletar(<?php echo $id; ?>)" class='btn btn-danger btn-xs'>Deletar</a>
+                                <a class='btn btn-info btn-xs btn-editar' data-id='<?php echo $id; ?>'>Editar</a>
                                 <ul>
                                     <li>Endereço: <?php echo $endereco; ?></li>
                                     <li>Sexo: <?php echo $sexo; ?></li>
@@ -121,9 +123,9 @@ while ($sql->fetch()) {
             </div>
         </div>
         <script>
-                $('#btn-enviar').click(fun ction () {
+            $('#btn-enviar').click(function () {
                 var valido = true;
-            if ($('#input-nome').val() == '') {
+                if ($('#input-nome').val() == '') {
                     valido = false;
                     alert('Preencha o nome');
                 }
@@ -137,10 +139,41 @@ while ($sql->fetch()) {
                 }
 
                 return valido;
-            })
-            
-            function confirmaDeletar(){
-                confirm("Deseja Deletar?");
+            });
+
+            $('.btn-editar').click(function () {
+                var id_pessoa = $(this).data('id');
+                $('#input-nome').val('')
+                $('#input-endereco').val('')
+                $('#opt-masc').removeAttr('checked');
+                $('#opt-fem').removeAttr('checked');
+                $('#input-ativo').attr('checked',true);
+                $.ajax({
+                    method: "POST",
+                    url: "editar.php",
+                    data: {id: id_pessoa},
+                    dataType: 'json'
+                }).done(function (resposta) {
+                    $('#input-nome').val(resposta.nome)
+                    $('#input-endereco').val(resposta.endereco)
+                    if (resposta.sexo == 'm') {
+                        $('#opt-masc').prop('checked', 'checked');
+                    } else {
+                        $('#opt-fem').prop('checked', 'checked');
+                    }
+
+                    if (resposta.ativo) {
+                        $('#input-ativo').prop('checked', true);
+                    } else {
+                        $('#input-ativo').removeAttr('checked')
+                    }
+                })
+            });
+
+            function confirmaDeletar(id) {
+                if (confirm("Deseja Deletar?")) {
+                    window.location.href = 'excluir.php?id=' + id
+                }
             }
         </script>
     </body>
